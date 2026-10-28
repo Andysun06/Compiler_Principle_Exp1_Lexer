@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- ============================================================
+       LexLab —— 《编译原理》实验一：词法分析
+       单文件自包含发布：所有依赖（.NET 运行时 + Tesseract OCR + 语言数据）
+       全部打包进一个 exe，双击即可运行，目标机无需安装任何环境。
+       ============================================================ -->
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <!-- 本程序的界面全部由代码构建，不使用 WinForms 设计器，因此关闭该设计器相关的分析器规则 -->
+    <NoWarn>$(NoWarn);WFO1000</NoWarn>
+    <RootNamespace>LexLab</RootNamespace>
+    <AssemblyName>LexLab</AssemblyName>
+    <Version>1.0.0</Version>
+    <AssemblyTitle>LexLab 词法分析实验系统</AssemblyTitle>
+    <Product>LexLab</Product>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+
+    <!-- WinForms 应用级配置（由 ApplicationConfiguration.Initialize 使用） -->
+    <ApplicationVisualStyles>true</ApplicationVisualStyles>
+    <ApplicationUseCompatibleTextRendering>false</ApplicationUseCompatibleTextRendering>
+    <ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
+
+    <!-- 单文件自包含发布相关 -->
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <!-- 把 Tesseract 的原生 dll（tesseract50.dll / leptonica）打进 exe -->
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <!-- 把 tessdata/eng.traineddata 等“内容文件”也打进 exe，运行时自动释放 -->
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    <DebugType>none</DebugType>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- OCR 引擎：Tesseract（托管封装）+ 英文语言数据 -->
+    <PackageReference Include="Tesseract" Version="5.2.0" />
+    <PackageReference Include="Tesseract.Data.English" Version="4.0.0" />
+  </ItemGroup>
+
+</Project>
